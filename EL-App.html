@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Extensive Reading App</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+  <div id="container"></div>
+
+  <script type="text/babel">
+    'use strict';
+
+    {
+      const HeroSection = () => (
+        <section className="hero">
+          
+        </section>
+      );
+
+      const AnalysisSection = () => (
+        <section className="ana">
+          
+        </section>
+      );
+
+      const FavoritesSection = () => (
+        <section className="fav">
+          
+        </section>
+      );
+
+      const BottomNav = () => (
+        <section className="btn">
+          
+        </section>
+      );
+
+      const App = () => {
+        return (
+          <div className="bg-abstract">
+            <HeroSection />
+            <AnalysisSection />
+            <FavoritesSection />
+            <BottomNav />
+          </div>
+        );
+      };
+
+      const container = document.querySelector('#container');
+      const root = ReactDOM.createRoot(container);
+      root.render(<App />);
+    }
+  </script>
+</body>
+
+</html>
