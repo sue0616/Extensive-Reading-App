@@ -9,7 +9,8 @@
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
 
 <body>
@@ -44,8 +45,50 @@
       );
 
       const AnalysisSection = () => (
-        <section className="ana">
+        <section className="">
+          <div className="bg-rose-50 mt-28  pt-20 pb-12 px-8 relative z-20">
+            <div className="text-center mb-10">
+              <img src="img/deco3.png" className="w-24 absolute left-8 -top-14 mb-4" />
 
+              <h2 className="text-3xl font-serif mb-2 text-gray-800 font-bold">Total</h2>
+
+              <div className="text-lg space-x-2">
+                <span><strong>5788</strong> words</span>
+                <span>/</span>
+                <span><strong>300</strong> books</span>
+                <span>/</span>
+                <span><strong>30</strong> days</span>
+              </div>
+            </div>
+
+            <div className="mb-12">
+              <h3 className="text-center text-sm font-bold mb-3 tracking-widest uppercase">Level Proportion</h3>
+
+              <div className="w-full h-10 bg-white rounded-full overflow-hidden flex shadow-inner border-2 border-white">
+                {/* 比率は後でロジックで変えられるように組む */}
+                <div className="w-[50%] bg-rose-400"></div>
+                <div className="w-[30%] bg-rose-300"></div>
+                <div className="w-[20%] bg-rose-200"></div>
+              </div>
+            </div>
+
+            <div className="bg-white/60 p-6 rounded-3xl shadow-sm">
+              <h3 className="text-center text-sm font-bold mb-4 tracking-widest uppercase">Learning Streak</h3>
+              
+              <div className="grid grid-cols-7 gap-1.5">
+                {[...Array(28)].map((_, i) => (
+                  <div
+                    key={i}
+                    className={`aspect-square rounded-[2px] ${i % 4 === 0 ? 'bg-rose-400' :
+                      i % 4 === 1 ? 'bg-rose-200' :
+                        'bg-gray-100'
+                      }`}
+                  ></div>
+                ))}
+              </div>
+            </div>
+          </div>
+          <img src="img/deco4.png" className="w-64 mx-auto mt-16" />
         </section>
       );
 
