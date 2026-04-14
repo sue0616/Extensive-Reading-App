@@ -9,6 +9,7 @@
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
 
 <body>
@@ -21,12 +22,12 @@
       const HeroSection = () => (
         <section className="relative flex flex-col items-center">
           <div className="flex flex-col items-center justify-center p-6">
-            <h1 className="text-4xl font-serif mt-40 mb-6 text-center leading-tight">Extensive<br />Reading</h1>
+            <h1 className="text-5xl font-serif mt-28 mb-6 text-center leading-tight">Extensive<br />Reading</h1>
 
-            <img src="img/deco1.png" className="w-80 z-10" />
+            <img src="img/deco1.png" className="w-64 z-10" />
 
             <div className="relative">
-              <div className="w-52 h-52 flex items-center justify-center rounded-full border-[35px] border-rose-100 bg-white -mt-9">
+              <div className="w-60 h-60 flex items-center justify-center rounded-full border-[40px] border-rose-100 bg-white -mt-7">
                 <div className="text-center">
                   <span className="text-5xl font-bold">16%</span>
                   <p className="text-[10px] text-gray-400 mt-1">100,000 words</p>
@@ -55,9 +56,19 @@
       );
 
       const BottomNav = () => (
-        <section className="btn">
+        <nav className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[400px] h-20 bg-rose-400 flex items-center justify-around px-10  z-50">
+          <button className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
+            <span className="material-symbols-outlined text-3xl">refresh</span>
+          </button>
 
-        </section>
+          <button className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
+            <span className="material-symbols-outlined text-4xl">add</span>
+          </button>
+
+          <button className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
+            <span className="material-symbols-outlined text-3xl mt-2 ml-1">edit_note</span>
+          </button>
+        </nav>
       );
 
       const App = () => {
