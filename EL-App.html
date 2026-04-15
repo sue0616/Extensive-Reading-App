@@ -32,8 +32,9 @@
             <div className="relative">
               <div className="w-60 h-60 flex items-center justify-center rounded-full border-[40px] border-rose-100 bg-white -mt-7">
                 <div className="text-center">
-                  <span className="text-5xl font-bold">16%</span>
-                  <p className="text-[10px] text-gray-500 mt-1">100,000 words</p>
+                  <span className="text-6xl font-bold">16</span>
+                  <span className="text-2xl font-bold">%</span>
+                  <p className="text-sm text-gray-500 mt-1">100,000 words</p>
                 </div>
               </div>
 
@@ -108,26 +109,88 @@
         </section>
       );
 
-      const AddBtn = ({ onClose, showModal}) => {
-        const today = new Date().toISOString().split('T')[0].replace(/-/g, '/');
+      const AddBtn = ({ onClose, showModal, onSave }) => {
         const translateClass = showModal ? "translate-y-0" : "translate-y-full";
+
+        const today = new Date().toISOString().split('T')[0].replace(/-/g, '/');
+
+        const [currentInput, setCurrentInput] = useState({
+          date: today,
+          title: '',
+          words: '',
+          series: 'ORT',
+          level: 1,
+        });
+        const inputRef = useRef(null);
+
+        const handleDateChange = (e) => {
+          setCurrentInput({
+            ...currentInput,
+            date: e.currentTarget.value
+          });
+        };
+
+        const handleTitleChange = (e) => {
+          setCurrentInput({
+            ...currentInput,
+            title: e.currentTarget.value
+          });
+        };
+
+        const handleWordsChange = (e) => {
+          setCurrentInput({
+            ...currentInput,
+            words: Number(e.currentTarget.value)
+          });
+        };
+
+        const handleSeriesChange = (e) => {
+          setCurrentInput({
+            ...currentInput,
+            series: e.currentTarget.value
+          });
+        };
+
+        const handleLevelChange = (e) => {
+          setCurrentInput({
+            ...currentInput,
+            level: e.currentTarget.value
+          });
+        };
+
+        const handleSubmit = (e) => {
+          if (!currentInput.title || isNaN(currentInput.words) || currentInput.words <= 0) return;
+          e.preventDefault();
+          onSave(currentInput);
+          setCurrentInput({
+            ...currentInput,
+            title: '',
+            words: '',
+          });
+          inputRef.current.focus();
+        }
 
         return (
           <>
             <div
               className={`
-                flex-col px-8 py-6 fixed rounded-[2.5rem] bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[432px] bg-rose-400 flex items-center justify-around z-[100] transition-transform duration-500 ease-in-out
+                flex-col px-8 py-6 fixed rounded-[2.5rem] bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[431px] bg-rose-400 flex items-center justify-around z-[100] transition-transform duration-500 ease-in-out
                 ${showModal ? 'translate-y-0' : 'translate-y-full'}`}
             >
 
-
-              <form className="bg-white w-full rounded-[2rem] pb-36 relative flex-grow mt-4">
+              <form
+                onSubmit={handleSubmit}
+                className="bg-white w-full rounded-[2rem] pb-36 relative flex-grow mt-4">
 
                 <div className="absolute top-4 right-5 flex gap-2">
-                  <button className="w-10 h-10 rounded-full bg-rose-50 flex items-center justify-center shadow-sm">
-                    <span className="material-symbols-outlined text-rose-400 text-xl">favorite</span>
+                  <button
+                    type="button"
+                    className="w-10 h-10 rounded-full bg-rose-50 flex items-center justify-center shadow-sm">
+                    <span className="material-symbols-outlined text-rose-400 text-xl mt-1">favorite</span>
                   </button>
-                  <button className="w-10 h-10 rounded-full bg-rose-50 flex items-center justify-center shadow-sm font-bold">
+                  <button
+                    type="submit"
+                    className="w-10 h-10 rounded-full bg-rose-50 flex items-center justify-center shadow-sm font-bold">
                     <span className="material-symbols-outlined text-rose-400 text-xl">check</span>
                   </button>
                 </div>
@@ -140,6 +203,8 @@
                     <input
                       type="text"
                       defaultValue={today}
+                      onChange={handleDateChange}
+                      value={currentInput.date}
                       className="bg-transparent focus:outline-none"
                       placeholder="YYYY/MM/DD"
                     />
@@ -149,6 +214,9 @@
                     <input
                       type="text"
                       placeholder="Enter title..."
+                      onChange={handleTitleChange}
+                      value={currentInput.title}
+                      ref={inputRef}
                       className="flex-grow bg-transparent focus:outline-none placeholder:text-gray-400 transition-colors"
                     />
                   </div>
@@ -157,24 +225,30 @@
                     <input
                       type="text"
                       placeholder="0"
+                      onChange={handleWordsChange}
+                      value={currentInput.words}
                       className="w-20 flex-grow bg-transparent focus:outline-none placeholder:text-gray-400 transition-colors"
                     />
                   </div>
                   <div className="flex items-baseline border-b border-dotted border-gray-200 pb-1">
                     <span className="w-20">Series :</span>
-                    <select>
+                    <select
+                      onChange={handleSeriesChange}
+                      value={currentInput.series}
+                    >
                       <option>ORT</option>
-                      <option>LLL</option>
-                      <option>ICR</option>
                       <option>Other</option>
                     </select>
                   </div>
                   <div className="flex items-baseline border-b border-dotted border-gray-200 pb-1">
-                    <span className="w-20">Level :</span>
+                    <span className="w-24">Level : ({currentInput.level}) </span>
                     <input
                       type="range"
                       min="1"
                       max="9"
+                      defaultValue="1"
+                      onChange={handleLevelChange}
+                      value={currentInput.level}
                       className="accent-rose-400 w-38 h-2 bg-rose-50 rounded-lg appearance-none cursor-pointer"
                     />
                   </div>
@@ -187,10 +261,11 @@
                 </div>
 
                 <button
+                  type="button"
                   onClick={onClose}
                   className="w-12 h-12 bg-white rounded-full flex items-center justify-center"
                 >
-                  <span className="material-symbols-outlined text-4xl">close</span>
+                  <span className="material-symbols-outlined text-3xl">close</span>
                 </button>
               </nav>
             </div>
@@ -200,18 +275,23 @@
 
       const BottomNav = ({ onAddClick }) => (
         <nav className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] h-20 bg-rose-400 flex items-center justify-around px-10  z-50">
-          <button className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
+          <button
+            type="button"
+            className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
             <span className="material-symbols-outlined text-3xl">refresh</span>
           </button>
 
           <button
+            type="button"
             onClick={onAddClick}
             className="w-12 h-12 bg-white rounded-full flex items-center justify-center"
           >
             <span className="material-symbols-outlined text-4xl">add</span>
           </button>
 
-          <button className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
+          <button
+            type="button"
+            className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
             <span className="material-symbols-outlined text-3xl mt-2 ml-1">edit_note</span>
           </button>
         </nav>
@@ -220,14 +300,37 @@
       const App = () => {
         const [showModal, setShowModal] = useState(false);
 
+        const [records, setRecords] = useState(() => {
+          const saved = localStorage.getItem('reading-app-data');
+          return saved ? JSON.parse(saved) : [];
+        });
+
+        useEffect(() => {
+          localStorage.setItem('reading-app-data', JSON.stringify(records));
+        }, [records]);
+
+        const addRecord = (newRecord) => {
+          setRecords([newRecord, ...records]);
+        };
+
         return (
-          <div className="max-w-[430px] mx-auto min-h-screen bg-white font-serif shadow-xl overflow-hidden relative select-none">
-            <HeroSection />
-            <AnalysisSection />
-            <FavoritesSection />
-            <BottomNav onAddClick={() => setShowModal(true)} />
-            <AddBtn showModal={showModal} onClose={() => setShowModal(false)} />
-          </div>
+          <>
+            <main className="bg-rose-200">
+              <div className="max-w-[430px] mx-auto min-h-screen bg-white font-serif shadow-xl overflow-hidden relative select-none">
+                <HeroSection />
+                <AnalysisSection />
+                <FavoritesSection />
+
+                <BottomNav onAddClick={() => setShowModal(true)} />
+
+                <AddBtn
+                  showModal={showModal}
+                  onClose={() => setShowModal(false)}
+                  onSave={addRecord}
+                />
+              </div>
+            </main>
+          </>
         );
       };
 
