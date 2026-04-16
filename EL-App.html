@@ -31,14 +31,14 @@
 
                 <img src="img/deco1.png" className="w-64 z-10" />
 
-                <div className="relative -mt-7">
+                <div className="relative -mt-7 mb-20">
                   <div>
                     <svg width="240" height="240" viewBox="0 0 120 120">
                       <circle cx="60" cy="60" r="50" fill="none" stroke="#ffe4e6" strokeWidth="12" />
 
                       <circle cx="60" cy="60" r="54" fill="none" stroke="#fb7185"
                         strokeWidth="12" strokeLinecap="round"
-                        transform="rotate(-90 60 60)"/>
+                        transform="rotate(-90 60 60)" />
                     </svg>
                     <div className="text-center -mt-40">
                       <span className="text-6xl font-bold">16</span>
@@ -49,7 +49,7 @@
 
                   <img
                     src="img/deco2.png"
-                    className="absolute -right-8 -bottom-10 w-28"
+                    className="absolute -right-10 -bottom-20 w-28"
                   />
                 </div>
               </div>
@@ -131,6 +131,7 @@
           words: '',
           series: 'ORT',
           level: 1,
+          isFavorite: false,
         });
         const inputRef = useRef(null);
 
@@ -169,14 +170,24 @@
           });
         };
 
+        const handleIsFavoriteBtn = () => {
+          setCurrentInput({
+            ...currentInput,
+            isFavorite: !currentInput.isFavorite
+          });
+        };
+
         const handleSubmit = (e) => {
-          if (!currentInput.title || isNaN(currentInput.words) || currentInput.words < 0) return;
           e.preventDefault();
+
+          if (!currentInput.title || isNaN(currentInput.words) || currentInput.words < 0) return;
+          
           onSave(currentInput);
           setCurrentInput({
             ...currentInput,
             title: '',
             words: '',
+            isFavorite: false,
           });
           inputRef.current.focus();
         }
@@ -196,8 +207,12 @@
                 <div className="absolute top-4 right-5 flex gap-2">
                   <button
                     type="button"
+                    onClick={handleIsFavoriteBtn}
                     className="w-10 h-10 rounded-full bg-rose-50 flex items-center justify-center shadow-sm">
-                    <span className="material-symbols-outlined text-rose-400 text-xl mt-1">favorite</span>
+                    <span
+                      className="text-rose-400 text-xl mt-1 material-symbols-outlined"
+                      style={{fontVariationSettings: currentInput.isFavorite ? "'FILL' 1" : "'FILL' 0"}}
+                    >favorite</span>
                   </button>
                   <button
                     type="submit"
@@ -329,7 +344,7 @@
           <>
             <main className="bg-rose-200">
               <div className="max-w-[430px] mx-auto min-h-screen bg-white font-serif shadow-xl overflow-hidden relative select-none">
-                <HeroSection/>
+                <HeroSection />
                 <AnalysisSection />
                 <FavoritesSection />
 
