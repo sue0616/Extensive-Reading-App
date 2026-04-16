@@ -22,30 +22,41 @@
     {
       const { useState, useEffect, useRef } = React;
 
-      const HeroSection = () => (
-        <section className="relative">
-          <div className="flex flex-col items-center justify-center p-6">
-            <h1 className="text-5xl mt-28 mb-6 text-center leading-tight">Extensive<br />Reading</h1>
+      const HeroSection = () => {
+        return (
+          <>
+            <section className="relative">
+              <div className="flex flex-col items-center justify-center p-6">
+                <h1 className="text-5xl mt-28 mb-6 text-center leading-tight">Extensive<br />Reading</h1>
 
-            <img src="img/deco1.png" className="w-64 z-10" />
+                <img src="img/deco1.png" className="w-64 z-10" />
 
-            <div className="relative">
-              <div className="w-60 h-60 flex items-center justify-center rounded-full border-[40px] border-rose-100 bg-white -mt-7">
-                <div className="text-center">
-                  <span className="text-6xl font-bold">16</span>
-                  <span className="text-2xl font-bold">%</span>
-                  <p className="text-sm text-gray-500 mt-1">100,000 words</p>
+                <div className="relative -mt-7">
+                  <div>
+                    <svg width="240" height="240" viewBox="0 0 120 120">
+                      <circle cx="60" cy="60" r="50" fill="none" stroke="#ffe4e6" strokeWidth="12" />
+
+                      <circle cx="60" cy="60" r="54" fill="none" stroke="#fb7185"
+                        strokeWidth="12" strokeLinecap="round"
+                        transform="rotate(-90 60 60)"/>
+                    </svg>
+                    <div className="text-center -mt-40">
+                      <span className="text-6xl font-bold">16</span>
+                      <span className="text-2xl font-bold">%</span>
+                      <p className="text-sm text-gray-500 mt-1">100,000 words</p>
+                    </div>
+                  </div>
+
+                  <img
+                    src="img/deco2.png"
+                    className="absolute -right-8 -bottom-10 w-28"
+                  />
                 </div>
               </div>
-
-              <img
-                src="img/deco2.png"
-                className="absolute -right-8 -bottom-10 w-28"
-              />
-            </div>
-          </div>
-        </section>
-      );
+            </section>
+          </>
+        )
+      };
 
       const AnalysisSection = () => (
         <section className="bg-rose-50 mt-28  pt-20 pb-12 px-8 relative z-20">
@@ -159,7 +170,7 @@
         };
 
         const handleSubmit = (e) => {
-          if (!currentInput.title || isNaN(currentInput.words) || currentInput.words <= 0) return;
+          if (!currentInput.title || isNaN(currentInput.words) || currentInput.words < 0) return;
           e.preventDefault();
           onSave(currentInput);
           setCurrentInput({
@@ -224,7 +235,7 @@
                     <span className="w-20">Words :</span>
                     <input
                       type="text"
-                      inputmode="numeric"
+                      inputMode="numeric"
                       pattern="\d*"
                       placeholder="0"
                       onChange={handleWordsChange}
@@ -318,11 +329,13 @@
           <>
             <main className="bg-rose-200">
               <div className="max-w-[430px] mx-auto min-h-screen bg-white font-serif shadow-xl overflow-hidden relative select-none">
-                <HeroSection />
+                <HeroSection/>
                 <AnalysisSection />
                 <FavoritesSection />
 
-                <BottomNav onAddClick={() => setShowModal(true)} />
+                <BottomNav
+                  onAddClick={() => setShowModal(true)}
+                />
 
                 <AddBtn
                   showModal={showModal}
