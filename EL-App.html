@@ -22,7 +22,14 @@
     {
       const { useState, useEffect, useRef } = React;
 
-      const HeroSection = () => {
+      const HeroSection = ({ totalWords }) => {
+        const semesterGoal = 100000;
+        const percentage = Math.min(Math.floor((totalWords / semesterGoal) * 100), 100);
+
+        const r = 50;
+        const circumference = 2 * Math.PI * r;
+        const offset = circumference - (percentage / 100) * circumference;
+
         return (
           <>
             <section className="relative">
@@ -34,14 +41,17 @@
                 <div className="relative -mt-7 mb-20">
                   <div>
                     <svg width="240" height="240" viewBox="0 0 120 120">
-                      <circle cx="60" cy="60" r="50" fill="none" stroke="#ffe4e6" strokeWidth="12" />
+                      <circle cx="60" cy="60" r={r} fill="none" stroke="#ffe4e6" strokeWidth="16" />
 
-                      <circle cx="60" cy="60" r="54" fill="none" stroke="#fb7185"
-                        strokeWidth="12" strokeLinecap="round"
-                        transform="rotate(-90 60 60)" />
+                      <circle 
+                        cx="60" cy="60" r={r} fill="none" stroke="#fb7185" strokeWidth="12"
+                        transform="rotate(-90 60 60)"
+                        strokeDasharray={circumference}
+                        strokeDashoffset={offset}
+                      />
                     </svg>
                     <div className="text-center -mt-40">
-                      <span className="text-6xl font-bold">16</span>
+                      <span className="text-6xl font-bold">{percentage}</span>
                       <span className="text-2xl font-bold">%</span>
                       <p className="text-sm text-gray-500 mt-1">100,000 words</p>
                     </div>
@@ -58,7 +68,7 @@
         )
       };
 
-      const AnalysisSection = () => (
+      const AnalysisSection = ({ totalWordsm, totalBooks }) => (
         <section className="bg-rose-50 mt-28  pt-20 pb-12 px-8 relative z-20">
           <div className="text-center mb-10">
             <img src="img/deco3.png" className="w-24 absolute left-8 -top-14 mb-4" />
@@ -181,7 +191,7 @@
           e.preventDefault();
 
           if (!currentInput.title || isNaN(currentInput.words) || currentInput.words < 0) return;
-          
+
           onSave(currentInput);
           setCurrentInput({
             ...currentInput,
@@ -211,7 +221,7 @@
                     className="w-10 h-10 rounded-full bg-rose-50 flex items-center justify-center shadow-sm">
                     <span
                       className="text-rose-400 text-xl mt-1 material-symbols-outlined"
-                      style={{fontVariationSettings: currentInput.isFavorite ? "'FILL' 1" : "'FILL' 0"}}
+                      style={{ fontVariationSettings: currentInput.isFavorite ? "'FILL' 1" : "'FILL' 0" }}
                     >favorite</span>
                   </button>
                   <button
@@ -340,12 +350,20 @@
           setRecords([newRecord, ...records]);
         };
 
+        const totalWords = records.reduce((sum, record) => sum + Number(record.words || 0), 0);
+        const totalBooks = records.length;
+
         return (
           <>
             <main className="bg-rose-200">
               <div className="max-w-[430px] mx-auto min-h-screen bg-white font-serif shadow-xl overflow-hidden relative select-none">
-                <HeroSection />
-                <AnalysisSection />
+                <HeroSection
+                  totalWords={totalWords}
+                />
+                <AnalysisSection
+                  totalWords={totalWords}
+                  totalBooks={totalBooks}
+                />
                 <FavoritesSection />
 
                 <BottomNav
