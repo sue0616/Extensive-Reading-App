@@ -68,11 +68,71 @@
         )
       };
 
-      const AnalysisSection = ({ totalWords, totalBooks, levelBookCounts }) => {
+      const AnalysisSection = ({ totalWords, totalBooks, levelBookCounts, wordsByDate }) => {
         const getLevelBookWidth = (lvl) => {
           if (totalBooks === 0) return 0;
           return ((levelBookCounts[lvl] || 0) / totalBooks) * 100;
         };
+
+        const calendarConfig = {
+          start: "2026/04/10",
+          end: "2026/07/17",
+          classes: {
+            "2026/04/10": 1, "2026/04/17": 2, "2026/04/24": 3, "2026/05/01": 4,
+            "2026/05/08": 5, "2026/05/15": 6, "2026/05/22": 7, "2026/05/29": 8,
+            "2026/06/05": 9, "2026/06/12": 10, "2026/06/19": 11, "2026/06/26": 12,
+            "2026/07/10": 13, "2026/07/17": 14
+          },
+          holidays: ["2026/05/04", "2026/05/05", "2026/05/06", "2026/05/28", "2026/07/03"]
+        };
+
+        const maxDayWords = Math.max(...Object.values(wordsByDate), 0) || 1;
+
+        const startDate = new Date("2026/04/05");
+        const endDate = new Date("2026/07/18");
+        const calendarDays = [];
+        let curr = new Date(startDate);
+
+        while (curr <= endDate) {
+          calendarDays.push(new Date(curr));
+          curr.setDate(curr.getDate() + 1);
+        }
+
+        const today = new Date();
+        const todayStr = `${today.getFullYear()}/${String(today.getMonth() + 1).padStart(2, '0')}/${String(today.getDate()).padStart(2, '0')}`;
+
+        const renderHeatMap = () => {
+          return calendarDays.map((date) => {
+            const dateStr = `${date.getFullYear()}/${String(date.getMonth() + 1).padStart(2, '0')}/${String(date.getDate()).padStart(2, '0')}`;
+            const words = wordsByDate[dateStr] || 0;
+            const classCount = calendarConfig.classes[dateStr];
+            const isWeekend = date.getDay();
+            const isHoliday = calendarConfig.holidays.includes(dateStr) || isWeekend === 0 || isWeekend === 6;
+            const isToday = dateStr === todayStr;
+
+            let bgColor = "bg-gray-100";
+            if (words > 0) {
+              const ratio = words / maxDayWords;
+              if (ratio > 0.75) bgColor = "bg-rose-400";
+              else if (ratio > 0.5) bgColor = "bg-rose-300";
+              else if (ratio > 0.25) bgColor = "bg-rose-200";
+              else bgColor = "bg-rose-100";
+            } else if (isHoliday) {
+              bgColor = "bg-gray-200";
+            }
+
+            return (
+              <div
+                key={dateStr}
+                className={`w-4 h-4 rounded-[2px] relative flex items-center justify-center text-[8px] 
+                  ${bgColor} ${isToday ? 'border border-rose-500' : ''}`}
+              >
+
+                {classCount && <span className="opacity-40 font-bold">{(classCount)}</span>}
+              </div>
+            );
+          })
+        }
 
         return (
           <>
@@ -110,16 +170,14 @@
               <div className="bg-white/60 pt-8 px-6 rounded-3xl shadow-sm">
                 <h3 className="text-center text-sm font-bold mb-4 tracking-widest uppercase">Learning Streak</h3>
 
-                <div className="grid grid-cols-12 gap-1.5">
-                  {[...Array(84)].map((_, i) => (
-                    <div
-                      key={i}
-                      className={`aspect-square rounded-[2px] ${i % 5 === 0 ? 'bg-rose-400' :
-                        i % 5 === 1 ? 'bg-rose-200' :
-                          'bg-gray-100'
-                        }`}
-                    ></div>
-                  ))}
+                <div className="grid grid-flow-col grid-rows-7 gap-1 overflow-x-auto pb-2">
+                  {renderHeatMap()}
+                </div>
+                <div className="flex justify-between mt-4 text-[10px] px-6 tracking-tighter">
+                  <span>April</span>
+                  <span>May</span>
+                  <span>June</span>
+                  <span>July</span>
                 </div>
 
                 <img src="img/deco4.png" className="w-40 mx-auto mt-8" />
@@ -147,10 +205,11 @@
       const AddBtn = ({ onClose, showModal, onSave }) => {
         const translateClass = showModal ? "translate-y-0" : "translate-y-full";
 
-        const today = new Date().toISOString().split('T')[0].replace(/-/g, '/');
+        const today = new Date();
+        const todayStr = `${today.getFullYear()}/${String(today.getMonth() + 1).padStart(2, '0')}/${String(today.getDate()).padStart(2, '0')}`;
 
         const [currentInput, setCurrentInput] = useState({
-          date: today,
+          date: todayStr,
           title: '',
           words: '',
           series: 'ORT',
@@ -380,6 +439,10 @@
           return sum;
         }, {});
 
+        const wordsByDate = records.reduce((sum, r) => {
+          sum[r.date] = (sum[r.date] || 0) + Number(r.words);
+          return sum;
+        }, {});
 
         return (
           <>
@@ -392,6 +455,7 @@
                   totalWords={totalWords}
                   totalBooks={totalBooks}
                   levelBookCounts={levelBookCounts}
+                  wordsByDate={wordsByDate}
                 />
                 <FavoritesSection />
 
