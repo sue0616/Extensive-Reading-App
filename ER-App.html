@@ -68,10 +68,10 @@
         )
       };
 
-      const AnalysisSection = ({ totalWords, totalBooks, levelBookCounts, wordsByDate }) => {
-        const getLevelBookWidth = (lvl) => {
+      const AnalysisSection = ({ totalWords, totalBooks, YlevelBookCounts, wordsByDate }) => {
+        const getYLevelBookWidth = (lvl) => {
           if (totalBooks === 0) return 0;
-          return ((levelBookCounts[lvl] || 0) / totalBooks) * 100;
+          return ((YlevelBookCounts[lvl] || 0) / totalBooks) * 100;
         };
 
         const calendarConfig = {
@@ -152,18 +152,18 @@
               </div>
 
               <div className="mb-12">
-                <h3 className="text-center text-sm font-bold  tracking-widest uppercase">Level Proportion</h3>
+                <h3 className="text-center text-sm font-bold  tracking-widest uppercase"> Proportion</h3>
 
                 <div className="w-full h-10 bg-white rounded-full overflow-hidden flex shadow-inner border-2 border-white">
-                  <div className="bg-rose-200" style={{ width: `${getLevelBookWidth("Beginner")}%` }}></div>
-                  <div className="bg-rose-300" style={{ width: `${getLevelBookWidth("Intermediate")}%` }}></div>
-                  <div className="bg-rose-400" style={{ width: `${getLevelBookWidth("Advanced")}%` }}></div>
+                  <div className="bg-rose-200" style={{ width: `${getYLevelBookWidth("Beginner")}%` }}></div>
+                  <div className="bg-rose-300" style={{ width: `${getYLevelBookWidth("Intermediate")}%` }}></div>
+                  <div className="bg-rose-400" style={{ width: `${getYLevelBookWidth("Advanced")}%` }}></div>
                 </div>
 
                 <div className="text-xs text-right space-x-3 pr-1">
-                  <span>Lv.1 : {levelBookCounts["Beginner"] || 0}</span>
-                  <span>Lv.2 : {levelBookCounts["Intermediate"] || 0}</span>
-                  <span>Lv.3 : {levelBookCounts["Advanced"] || 0}</span>
+                  <span>Lv.1 : {YlevelBookCounts["Beginner"] || 0}</span>
+                  <span>Lv.2 : {YlevelBookCounts["Intermediate"] || 0}</span>
+                  <span>Lv.3 : {YlevelBookCounts["Advanced"] || 0}</span>
                 </div>
               </div>
 
@@ -213,7 +213,7 @@
           title: '',
           words: '',
           series: 'ORT',
-          level: 1,
+          Ylevel: 0.0,
           isFavorite: false,
         });
         const inputRef = useRef(null);
@@ -246,10 +246,10 @@
           });
         };
 
-        const handleLevelChange = (e) => {
+        const handleYLevelChange = (e) => {
           setCurrentInput({
             ...currentInput,
-            level: e.currentTarget.value
+            Ylevel: e.currentTarget.value
           });
         };
 
@@ -352,13 +352,14 @@
                     </select>
                   </div>
                   <div className="flex items-baseline border-b border-dotted border-gray-200 pb-1">
-                    <span className="w-24">Level : ({currentInput.level}) </span>
+                    <span className="w-24">YL : ({currentInput.Ylevel}) </span>
                     <input
                       type="range"
-                      min="1"
-                      max="9"
-                      onChange={handleLevelChange}
-                      value={currentInput.level}
+                      min="0.0"
+                      max="2.2"
+                      step="0.1"
+                      onChange={handleYLevelChange}
+                      value={currentInput.Ylevel}
                       className="accent-rose-400 w-38 h-2 bg-rose-50 rounded-lg appearance-none cursor-pointer"
                     />
                   </div>
@@ -426,12 +427,12 @@
         const totalWords = records.reduce((sum, record) => sum + Number(record.words || 0), 0);
         const totalBooks = records.length;
 
-        const levelBookCounts = records.reduce((sum, record) => {
+        const YlevelBookCounts = records.reduce((sum, record) => {
           let group;
 
           if (record.series === "ORT") {
-            if (record.level <= 3) group = "Beginner";
-            else if (record.level <= 6) group = "Intermediate";
+            if (record.Ylevel <= 1) group = "Beginner";
+            else if (record.Ylevel <= 2) group = "Intermediate";
             else group = "Advanced";
           }
 
@@ -454,7 +455,7 @@
                 <AnalysisSection
                   totalWords={totalWords}
                   totalBooks={totalBooks}
-                  levelBookCounts={levelBookCounts}
+                  YlevelBookCounts={YlevelBookCounts}
                   wordsByDate={wordsByDate}
                 />
                 <FavoritesSection />
