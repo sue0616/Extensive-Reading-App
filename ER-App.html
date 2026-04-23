@@ -69,6 +69,12 @@
       };
 
       const AnalysisSection = ({ totalWords, totalBooks, YlevelBookCounts, wordsByDate }) => {
+        const totalDays = Object.keys(wordsByDate).length;
+
+        const today = new Date();
+        const todayStr = `${today.getFullYear()}/${String(today.getMonth() + 1).padStart(2, '0')}/${String(today.getDate()).padStart(2, '0')}`;
+        const [selectedDate,setSelectedDate] = useState(todayStr);
+
         const getYLevelBookWidth = (lvl) => {
           if (totalBooks === 0) return 0;
           return ((YlevelBookCounts[lvl] || 0) / totalBooks) * 100;
@@ -98,8 +104,8 @@
           curr.setDate(curr.getDate() + 1);
         }
 
-        const today = new Date();
-        const todayStr = `${today.getFullYear()}/${String(today.getMonth() + 1).padStart(2, '0')}/${String(today.getDate()).padStart(2, '0')}`;
+        const tooltipDate = selectedDate ? selectedDate.substring(5) : "";
+        const tooltipWords = wordsByDate[selectedDate] || 0;
 
         const renderHeatMap = () => {
           return calendarDays.map((date) => {
@@ -124,8 +130,12 @@
             return (
               <div
                 key={dateStr}
+                title={`${dateStr}: ${words.toLocaleString()} words`}
+                onClick={() => setSelectedDate(dateStr)}
                 className={`w-4 h-4 rounded-[2px] relative flex items-center justify-center text-[8px] 
-                  ${bgColor} ${isToday ? 'border border-rose-500' : ''}`}
+                  ${bgColor} 
+                  ${isToday ? 'border border-rose-500' : ''}
+                  ${selectedDate === dateStr ? 'border border-black' : ''}`}
               >
 
                 {classCount && <span className="opacity-40 font-bold">{(classCount)}</span>}
@@ -147,7 +157,7 @@
                   <span>/</span>
                   <span><strong>{totalBooks.toLocaleString()}</strong> books</span>
                   <span>/</span>
-                  <span><strong>30</strong> days</span>
+                  <span><strong>{totalDays}</strong> days</span>
                 </div>
               </div>
 
@@ -160,20 +170,25 @@
                   <div className="bg-rose-400" style={{ width: `${getYLevelBookWidth("Advanced")}%` }}></div>
                 </div>
 
-                <div className="text-xs text-right space-x-3 pr-1">
-                  <span>Lv.1 : {YlevelBookCounts["Beginner"] || 0}</span>
-                  <span>Lv.2 : {YlevelBookCounts["Intermediate"] || 0}</span>
-                  <span>Lv.3 : {YlevelBookCounts["Advanced"] || 0}</span>
+                <div className="text-xs text-right space-x-3 pr-2">
+                  <span>Lv 1 : {YlevelBookCounts["Beginner"] || 0}</span>
+                  <span>Lv 2 : {YlevelBookCounts["Intermediate"] || 0}</span>
+                  <span>Lv 3 : {YlevelBookCounts["Advanced"] || 0}</span>
                 </div>
               </div>
 
-              <div className="bg-white/60 pt-8 px-6 rounded-3xl shadow-sm">
+              <div className="bg-white/60 pt-8 px-6 rounded-3xl shadow-sm relative">
                 <h3 className="text-center text-sm font-bold mb-4 tracking-widest uppercase">Learning Streak</h3>
+
+                <div className="absolute text-[8px] text-center top-6 right-[26px] p-1">
+                  {tooltipDate}<br/>
+                  {tooltipWords.toLocaleString()} words
+                </div>
 
                 <div className="grid grid-flow-col grid-rows-7 gap-1 overflow-x-auto pb-2">
                   {renderHeatMap()}
                 </div>
-                <div className="flex justify-between mt-4 text-[10px] px-6 tracking-tighter">
+                <div className="flex justify-between mt-1 text-[10px] px-6 tracking-tighter">
                   <span>April</span>
                   <span>May</span>
                   <span>June</span>
