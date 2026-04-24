@@ -73,7 +73,7 @@
 
         const today = new Date();
         const todayStr = `${today.getFullYear()}/${String(today.getMonth() + 1).padStart(2, '0')}/${String(today.getDate()).padStart(2, '0')}`;
-        const [selectedDate,setSelectedDate] = useState(todayStr);
+        const [selectedDate, setSelectedDate] = useState(todayStr);
 
         const getYLevelBookWidth = (lvl) => {
           if (totalBooks === 0) return 0;
@@ -181,7 +181,7 @@
                 <h3 className="text-center text-sm font-bold mb-4 tracking-widest uppercase">Learning Streak</h3>
 
                 <div className="absolute text-[8px] text-center top-6 right-[26px] p-1">
-                  {tooltipDate}<br/>
+                  {tooltipDate}<br />
                   {tooltipWords.toLocaleString()} words
                 </div>
 
@@ -228,6 +228,7 @@
           title: '',
           words: '',
           series: 'ORT',
+          subSeries: '1',
           Ylevel: 0.0,
           isFavorite: false,
         });
@@ -254,10 +255,27 @@
           });
         };
 
+        const SERIES_CONFIG = {
+          'ORT': { levels: [1, 2, 3, 4, 5, 6, 7, 8, 9] },
+          'OG': { levels: [] },
+          'ICR': { levels: ['My First', 1, 2, 3, 4] },
+          'Other': { levels: [] }
+        };
+
         const handleSeriesChange = (e) => {
+          const seriesName = e.currentTarget.value;
+          const config = SERIES_CONFIG[seriesName];
           setCurrentInput({
             ...currentInput,
-            series: e.currentTarget.value
+            series: e.currentTarget.value,
+            subSeries: (config && config.levels.length > 0) ? config.levels[0].toString() : ''
+          });
+        };
+
+        const handleSubSeriesChange = (e) => {
+          setCurrentInput({
+            ...currentInput,
+            subSeries: e.currentTarget.value
           });
         };
 
@@ -280,7 +298,15 @@
 
           if (!currentInput.title || isNaN(currentInput.words) || currentInput.words < 0) return;
 
-          onSave(currentInput);
+          const finalSeriesName = currentInput.subSeries
+            ? `${currentInput.series}-${currentInput.subSeries}`
+            : currentInput.series;
+
+          onSave({
+            ...currentInput,
+            series: finalSeriesName
+          });
+
           setCurrentInput({
             ...currentInput,
             title: '',
@@ -332,6 +358,7 @@
                       placeholder="YYYY/MM/DD"
                     />
                   </div>
+
                   <div className="flex items-baseline border-b border-dotted border-gray-200 pb-1">
                     <span className="w-20">Title :</span>
                     <input
@@ -344,6 +371,7 @@
                       className="flex-grow bg-transparent focus:outline-none placeholder:text-gray-400 transition-colors"
                     />
                   </div>
+
                   <div className="flex items-baseline border-b border-dotted border-gray-200 pb-1">
                     <span className="w-20">Words :</span>
                     <input
@@ -356,16 +384,30 @@
                       className="w-20 flex-grow bg-transparent focus:outline-none placeholder:text-gray-400 transition-colors"
                     />
                   </div>
+
                   <div className="flex items-baseline border-b border-dotted border-gray-200 pb-1">
                     <span className="w-20">Series :</span>
                     <select
                       onChange={handleSeriesChange}
                       value={currentInput.series}
                     >
-                      <option>ORT</option>
-                      <option>Other</option>
+                      {Object.keys(SERIES_CONFIG).map(name => (
+                        <option key={name} value={name}>{name}</option>
+                      ))}
                     </select>
+
+                    {SERIES_CONFIG[currentInput.series]?.levels.length > 0 && (
+                      <select
+                        onChange={handleSubSeriesChange}
+                        className="ml-1 font-sans"
+                      >
+                        {SERIES_CONFIG[currentInput.series].levels.map(lvl => (
+                          <option key={lvl} value={lvl}>{lvl}</option>
+                        ))}
+                      </select>
+                    )}
                   </div>
+                  
                   <div className="flex items-baseline border-b border-dotted border-gray-200 pb-1">
                     <span className="w-24">YL : ({currentInput.Ylevel}) </span>
                     <input
