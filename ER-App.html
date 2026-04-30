@@ -96,11 +96,6 @@
           curr.setDate(curr.getDate() + 1);
         }
 
-        while (curr <= endDate) {
-          calendarDays.push(new Date(curr));
-          curr.setDate(curr.getDate() + 1);
-        }
-
         const tooltipDate = selectedDate ? selectedDate.substring(5) : "";
         const tooltipWords = wordsByDate[selectedDate] || 0;
 
@@ -132,7 +127,7 @@
             return (
               <div
                 key={dateStr}
-                title={isBeforeStart ? "" : `${dateStr}: ${words.toLocaleString()} words`}
+                title={isBeforeStart ? "" : `${dateStr.substring(5)}: ${words.toLocaleString()} words`}
                 onClick={() => !isBeforeStart && setSelectedDate(dateStr)}
                 className={`w-4 h-4 rounded-[2px] relative flex items-center justify-center text-[8px] 
                   ${bgColor} 
@@ -219,7 +214,7 @@
         </section>
       );
 
-      const AddBtn = ({ onClose, showModal, onSave }) => {
+      const AddBtn = ({ onClose, showModal, onSave, seriesData }) => {
         const translateClass = showModal ? "translate-y-0" : "translate-y-full";
 
         const today = new Date();
@@ -243,11 +238,65 @@
           });
         };
 
+        const [suggestions, setSuggestions] = useState([]);
+        const [searchIndex, setSearchIndex] = useState([]);
+
+        useEffect(() => {
+          if (!seriesData) return;
+          const index = [];
+          Object.entries(seriesData).forEach(([seriesName, levels]) => {
+            Object.entries(levels).forEach(([level, books]) => {
+              Object.entries(books).forEach(([title, info]) => {
+                index.push({
+                  title,
+                  label: `${title} (${seriesName} ${level})`,
+                  words: info.w,
+                  yl: info.yl,
+                  series: seriesName,
+                  subSeries: level
+                });
+              });
+            });
+          });
+          setSearchIndex(index);
+        }, [seriesData]);
+
         const handleTitleChange = (e) => {
+          const value = e.currentTarget.value;
           setCurrentInput({
             ...currentInput,
-            title: e.currentTarget.value
+            title: value
           });
+
+          if (value.includes(' ')) {
+            const searchTerms = value.toLowerCase().split(/\s+/).filter(t => t !== "");
+
+            if (searchTerms.length === 0) {
+              setSuggestions([]);
+              return;
+            }
+
+            const filtered = searchIndex.filter(book => {
+              const targetText = book.label.toLowerCase();
+              return searchTerms.every(term => targetText.includes(term));
+            });
+
+            setSuggestions(filtered.slice(0, 5));
+          } else {
+            setSuggestions([]);
+          }
+        };
+
+        const handleSelect = (book) => {
+          setCurrentInput({
+            ...currentInput,
+            title: book.title,
+            words: book.words,
+            series: book.series,
+            subSeries: book.subSeries,
+            Ylevel: book.yl
+          });
+          setSuggestions([]);
         };
 
         const handleWordsChange = (e) => {
@@ -259,8 +308,8 @@
 
         const SERIES_CONFIG = {
           'ORT': { levels: [1, 2, 3, 4, 5, 6, 7, 8, 9] },
-          'OG': { levels: [] },
-          'ICR': { levels: ['My First', 1, 2, 3, 4] },
+          'CG': { levels: [] },
+          'ICR': { levels: ['My First', 1] },
           'FRL': { levels: [1, 2, 3, 4, 5, 6, 7] },
           'PGR': { levels: [0, 1, 2] },
           'OBW': { levels: [0, 1] },
@@ -337,7 +386,7 @@
                   <button
                     type="button"
                     onClick={handleIsFavoriteBtn}
-                    className="w-10 h-10 rounded-full bg-rose-50 flex items-center justify-center shadow-sm">
+                    className="w-10 h-10 rounded-full bg-rose-50 flex items-center justify-center shadow-inner">
                     <span
                       className="text-rose-400 text-xl mt-1 material-symbols-outlined"
                       style={{ fontVariationSettings: currentInput.isFavorite ? "'FILL' 1" : "'FILL' 0" }}
@@ -345,7 +394,7 @@
                   </button>
                   <button
                     type="submit"
-                    className="w-10 h-10 rounded-full bg-rose-50 flex items-center justify-center shadow-sm font-bold">
+                    className="w-10 h-10 rounded-full bg-rose-50 flex items-center justify-center shadow-inner font-bold">
                     <span className="material-symbols-outlined text-rose-400 text-xl">check</span>
                   </button>
                 </div>
@@ -364,17 +413,34 @@
                     />
                   </div>
 
-                  <div className="flex items-baseline border-b border-dotted border-gray-200 pb-1">
+                  <div className="relative flex items-baseline border-b border-dotted border-gray-200 pb-1">
                     <span className="w-20">Title :</span>
                     <input
                       type="text"
                       lang="en"
-                      placeholder="Enter title..."
+                      placeholder="Title (Space to search)"
                       onChange={handleTitleChange}
                       value={currentInput.title}
                       ref={inputRef}
                       className="flex-grow bg-transparent focus:outline-none placeholder:text-gray-400 transition-colors"
                     />
+
+                    {suggestions.length > 0 && (
+                      <ul className="absolute top-full left-0 w-full bg-white border border-rose-200 shadow-xl rounded-lg z-[100] mt-1 max-h-48 overflow-y-auto">
+                        {suggestions.map((book, idx) => (
+                          <li
+                            key={idx}
+                            onClick={() => handleSelect(book)}
+                            className="px-4 py-3 text-sm border-b border-rose-50 last:border-none active:bg-rose-100"
+                          >
+                            <div className="font-bold text-gray-800">{book.title}</div>
+                            <div className="text-[10px] text-gray-400">
+                              {book.series} - {book.subSeries} | {book.words} words
+                            </div>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
                   </div>
 
                   <div className="flex items-baseline border-b border-dotted border-gray-200 pb-1">
@@ -404,6 +470,7 @@
                     {SERIES_CONFIG[currentInput.series]?.levels.length > 0 && (
                       <select
                         onChange={handleSubSeriesChange}
+                        value={currentInput.subSeries}
                         className="ml-1 font-sans"
                       >
                         {SERIES_CONFIG[currentInput.series].levels.map(lvl => (
@@ -414,7 +481,7 @@
                   </div>
 
                   <div className="flex items-baseline border-b border-dotted border-gray-200 pb-1">
-                    <span className="w-24">YL : ({currentInput.Ylevel}) </span>
+                    <span className="w-24">YL : ({Number(currentInput.Ylevel).toFixed(1)}) </span>
                     <input
                       type="range"
                       min="0.0"
@@ -474,11 +541,16 @@
         const [showModal, setShowModal] = useState(false);
 
         const [calendarData, setCalendarData] = useState(null);
+        const [seriesData, setSeriesData] = useState(null);
         useEffect(() => {
           fetch('data/calendar.json')
             .then(res => res.json())
             .then(data => setCalendarData(data["2026_spring"]))
             .catch(err => console.error("Loading error:", err));
+          fetch('data/series.json')
+            .then(res => res.json())
+            .then(data => setSeriesData(data))
+            .catch(err => console.error("Series JSON loading error:", err));
         }, []);
 
         const [records, setRecords] = useState(() => {
@@ -535,6 +607,7 @@
                   showModal={showModal}
                   onClose={() => setShowModal(false)}
                   onSave={addRecord}
+                  seriesData={seriesData}
                 />
               </div>
             </main>

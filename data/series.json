@@ -1,0 +1,329 @@
+{
+  "ORT": {
+    "1": {
+      "At  School": {"w": 2, "yl": 0.0},
+      "Getting Up": {"w": 2, "yl": 0.0},
+      "Look Out!": {"w": 2, "yl": 0.0},
+      "The Haircut": {"w": 2, "yl": 0.0},
+      "The Lost Teddy": {"w": 3, "yl": 0.0},
+      "The Library": {"w": 2, "yl": 0.0},
+      "The Swing Ball": {"w": 3, "yl": 0.0},
+      "The Street Fair": {"w": 3, "yl": 0.0},
+      "The Big Box": {"w": 3, "yl": 0.0},
+      "Fetch!": {"w": 1, "yl": 0.0},
+      "The Hedgehog": {"w": 2, "yl": 0.0},
+      "The Apple": {"w": 2, "yl": 0.0},
+      "Who Is it?": {"w": 16, "yl": 0.0},
+      "Floppy Floppy": {"w": 10, "yl": 0.0},
+      "Six in a Bed": {"w": 19, "yl": 0.0},
+      "A Good Trick": {"w": 11, "yl": 0.0},
+      "Fun at the Beach": {"w": 27, "yl": 0.0},
+      "The Pancake": {"w": 16, "yl": 0.0},
+      "Is It?": {"w": 25, "yl": 0.0},
+      "Get On": {"w": 22, "yl": 0.0},
+      "Floppy Did This": {"w": 23, "yl": 0.0},
+      "Get Dad": {"w": 20, "yl": 0.0},
+      "Up You Go": {"w": 23, "yl": 0.0},
+      "I See": {"w": 35, "yl": 0.0},
+
+      "Hide and Seek": {"w": 36, "yl": 0.1},
+      "Reds and Blues": {"w": 30, "yl": 0.1},
+      "Big Feet": {"w": 39, "yl": 0.1},
+      "Look at Me": {"w": 33, "yl": 0.1},
+      "Go Away, Floppy": {"w": 24, "yl": 0.1},
+      "Kipper’s Diary": {"w": 45, "yl": 0.1},
+      "Top Dog": {"w": 39, "yl": 0.1},
+      "What Dogs Like": {"w": 31, "yl": 0.1},
+      "Go Away, Cat": {"w": 30, "yl": 0.1},
+      "Go On, Mum!": {"w": 41, "yl": 0.1},
+      "Look After Me": {"w": 38, "yl": 0.1},
+      "Presents for Dad": {"w": 45, "yl": 0.1},
+      "One Wheel": {"w": 53, "yl": 0.1},
+      "Chip’s Robot": {"w": 65, "yl": 0.1},
+      "The Sandcastle": {"w": 55, "yl": 0.1},
+      "Floppy’s Bone": {"w": 57, "yl": 0.1},
+      "The Box of Treasure": {"w": 55, "yl": 0.1},
+      "Hook a Duck": {"w": 55, "yl": 0.1},
+      "The Ice Cream": {"w": 31, "yl": 0.1},
+      "Can You See Me?": {"w": 39, "yl": 0.1},
+      "Good Dog": {"w": 43, "yl": 0.1},
+      "What a Din!": {"w": 34, "yl": 0.1},
+      "See Me Skip": {"w": 42, "yl": 0.1},
+      "The Mud Pie": {"w": 28, "yl": 0.1},
+      "Push!": {"w": 21, "yl": 0.1},
+      "At the Park": {"w": 29, "yl": 0.1},
+      "Fancy Dress": {"w": 23, "yl": 0.1},
+      "Good Old Mum": {"w": 34, "yl": 0.1},
+      "The Headache": {"w": 20, "yl": 0.1},
+      "The Pet Shop": {"w": 32, "yl": 0.1},
+      "Shopping": {"w": 35, "yl": 0.1},
+      "What a Mess!": {"w": 25, "yl": 0.1},
+      "Making Faces": {"w": 15, "yl": 0.1},
+      "Goal!": {"w": 24, "yl": 0.1},
+      "The Journey": {"w": 23, "yl": 0.1},
+      "Who Did That?": {"w": 36, "yl": 0.1}
+    },
+   
+   "2": {
+      "New Trainers": {"w": 34, "yl": 0.2},
+      "What a Bad Dog!": {"w": 51, "yl": 0.2},
+      "The Dream": {"w": 54, "yl": 0.2},
+      "The Go-kart": {"w": 47, "yl": 0.2},
+      "A New Dog": {"w": 52, "yl": 0.2},
+      "The Toys’ Party": {"w": 48, "yl": 0.2},
+      "The Water Fight": {"w": 64, "yl": 0.2},
+      "The Baby-sitter": {"w": 69, "yl": 0.2},
+      "Floppy’s Bath": {"w": 55, "yl": 0.2},
+      "Kipper’s Balloon": {"w": 61, "yl": 0.2},
+      "Kipper’s Birthday": {"w": 64, "yl": 0.2},
+      "Spots!": {"w": 53, "yl": 0.2},
+      "The Foggy Day": {"w": 67, "yl": 0.2},
+      "The Wobbly Tooth": {"w": 70, "yl": 0.2},
+      "Biff’s Aeroplane": {"w": 63, "yl": 0.2},
+      "The Chase": {"w": 81, "yl": 0.2},
+      "Floppy the Hero": {"w": 74, "yl": 0.2},
+      "Kipper’s Laces": {"w": 63, "yl": 0.2},
+      "Put It Back": {"w": 93, "yl": 0.2},
+      "Poor Floppy": {"w": 77, "yl": 0.2},
+      "The Big Egg": {"w": 69, "yl": 0.2},
+      "A Present for Mum": {"w": 77, "yl": 0.2},
+      "The Hole in the Sand": {"w": 79, "yl": 0.2},
+      "In a Bit": {"w": 83, "yl": 0.2},
+      "It’s the Weather": {"w": 58, "yl": 0.2},
+      "Creepy-crawly!": {"w": 73, "yl": 0.2},
+      "Monkey Tricks": {"w": 69, "yl": 0.2},
+      "Naughty Children": {"w": 73, "yl": 0.2},
+      "Hey Presto!": {"w": 86, "yl": 0.2},
+      "A Sinking Feeling": {"w": 57, "yl": 0.2},
+      "The Little Dragon": {"w": 89, "yl": 0.2},
+      "The Lost Puppy": {"w": 65, "yl": 0.2},
+      "New Trees": {"w": 87, "yl": 0.2},
+      "The Band": {"w": 66, "yl": 0.2},
+      "Up and Down": {"w": 55, "yl": 0.2},
+      "What Is It?": {"w": 66, "yl": 0.2}
+    },
+   
+   "3": {
+      "By the Stream": {"w": 71, "yl": 0.3},
+      "A Cat in the Tree": {"w": 79, "yl": 0.3},
+      "The Egg Hunt": {"w": 87, "yl": 0.3},
+      "Nobody Wanted to Play": {"w": 79, "yl": 0.3},
+      "The Rope Swing": {"w": 77, "yl": 0.3},
+      "On the Sand": {"w": 75, "yl": 0.3},
+      "Strawberry Jam": {"w": 77, "yl": 0.3},
+      "Kipper the Clown": {"w": 69, "yl": 0.3},
+      "The Jumble Sale": {"w": 81, "yl": 0.3},
+      "Kipper’s Idea": {"w": 78, "yl": 0.3},
+      "At the Seaside": {"w": 84, "yl": 0.3},
+      "The Snowman": {"w": 76, "yl": 0.3},
+      "At the Pool": {"w": 84, "yl": 0.3},
+      "The Barbecue": {"w": 73, "yl": 0.3},
+      "Book Week": {"w": 67, "yl": 0.3},
+      "Bull’s-eye!": {"w": 81, "yl": 0.3},
+      "The Carnival": {"w": 83, "yl": 0.3},
+      "The Cold Day": {"w": 75, "yl": 0.3},
+      "The Duck Race": {"w": 89, "yl": 0.3},
+      "Sniff": {"w": 128, "yl": 0.3},
+      "Pond Dipping": {"w": 82, "yl": 0.3},
+      "The Ice Rink": {"w": 90, "yl": 0.3},
+      "The Mud Bath": {"w": 90, "yl": 0.3},
+      "The Steel Band": {"w": 94, "yl": 0.3}
+    },
+    
+   "4": {
+      "The Storm": {"w": 188, "yl": 0.4},
+      "House for Sale": {"w": 109, "yl": 0.4},
+      "New House": {"w": 120, "yl": 0.4},
+      "Come In!": {"w": 109, "yl": 0.4},
+      "The Secret Room": {"w": 195, "yl": 0.4},
+      "The Play": {"w": 203, "yl": 0.4},
+      "The Balloon": {"w": 177, "yl": 0.4},
+      "The Camcorder": {"w": 182, "yl": 0.4},
+      "Nobody Got Wet": {"w": 97, "yl": 0.4},
+      "Poor Old Mum!": {"w": 84, "yl": 0.4},
+      "The Wedding": {"w": 197, "yl": 0.4},
+      "The Weather Vane": {"w": 107, "yl": 0.4},
+      "Swap!": {"w": 109, "yl": 0.4},
+      "The Dragon Dance": {"w": 192, "yl": 0.4},
+      "The Flying Elephant": {"w": 135, "yl": 0.4},
+      "Everyone Got Wet": {"w": 200, "yl": 0.4},
+      "Wet Paint": {"w": 122, "yl": 0.4},
+      "The Scarf": {"w": 220, "yl": 0.4},
+      "An Important Case": {"w": 184, "yl": 0.4},
+      "Tug of War": {"w": 161, "yl": 0.4},
+      "Dad’s Jacket": {"w": 151, "yl": 0.4},
+      "Stuck in the Mud": {"w": 129, "yl": 0.4},
+      "The Den": {"w": 140, "yl": 0.4},
+      "Look Smart": {"w": 187, "yl": 0.4}
+    },
+    
+   "5": {
+      "The Magic Key": {"w": 273, "yl": 0.5},
+      "Pirate Adventure": {"w": 330, "yl": 0.5},
+      "The Dragon Tree": {"w": 294, "yl": 0.5},
+      "Gran": {"w": 309, "yl": 0.5},
+      "Castle Adventure": {"w": 306, "yl": 0.5},
+      "Village in the Snow": {"w": 329, "yl": 0.5},
+      "The Great Race": {"w": 327, "yl": 0.5},
+      "A Monster Mistake": {"w": 334, "yl": 0.5},
+      "It’s Not Fair": {"w": 350, "yl": 0.5},
+      "Underground Adventure": {"w": 292, "yl": 0.5},
+      "Vanishing Cream": {"w": 313, "yl": 0.5},
+      "The Whatsit": {"w": 305, "yl": 0.5},
+      "Camping Adventure": {"w": 332, "yl": 0.5},
+      "A New Classroom": {"w": 325, "yl": 0.5},
+      "Mum to the Rescue": {"w": 348, "yl": 0.5},
+      "The New Baby": {"w": 360, "yl": 0.5},
+      "Noah’s Ark Adventure": {"w": 365, "yl": 0.5},
+      "Scarecrows": {"w": 318, "yl": 0.5},
+      "Sleeping Beauty": {"w": 321, "yl": 0.5},
+      "The Adventure Park": {"w": 334, "yl": 0.5},
+      "Kipper and the Trolls": {"w": 360, "yl": 0.5},
+      "Safari Adventure": {"w": 323, "yl": 0.5},
+      "Drawing Adventure": {"w": 369, "yl": 0.5},
+      "Dad’s Run": {"w": 347, "yl": 0.5}
+    },
+    
+   "6": {
+      "Land of Dinosaurs": {"w": 482, "yl": 0.6},
+      "In the Garden": {"w": 443, "yl": 0.6},
+      "Kipper and the Giant": {"w": 482, "yl": 0.6},
+      "The Outing": {"w": 509, "yl": 0.6},
+      "Robin Hood": {"w": 614, "yl": 0.6},
+      "The Treasure Chest": {"w": 737, "yl": 0.6},
+      "Rotten Apples": {"w": 465, "yl": 0.6},
+      "Christmas Adventure": {"w": 465, "yl": 0.6},
+      "The Go-kart Race": {"w": 478, "yl": 0.6},
+      "A Fright in the Night": {"w": 480, "yl": 0.6},
+      "The Laughing Princess": {"w": 470, "yl": 0.6},
+      "The Shiny Key": {"w": 492, "yl": 0.6},
+      "Paris Adventure": {"w": 481, "yl": 0.6},
+      "The Stolen Crown Part 1": {"w": 563, "yl": 0.6},
+      "The Stolen Crown Part 2": {"w": 522, "yl": 0.6},
+      "Olympic Adventure": {"w": 517, "yl": 0.6},
+      "A Ship in Trouble": {"w": 534, "yl": 0.6},
+      "Homework!": {"w": 519, "yl": 0.6}
+    },
+    
+   "7": {
+     "The Broken Roof": {"w": 983, "yl": 0.7},
+      "Lost in the Jungle": {"w": 969, "yl": 0.7},
+      "The Lost Key": {"w": 1051, "yl": 0.7},
+      "Red Planet": {"w": 904, "yl": 0.7},
+      "The Willow Pattern Plot": {"w": 928, "yl": 0.7},
+      "Submarine Adventure": {"w": 890, "yl": 0.7},
+      "The Bully": {"w": 848, "yl": 0.7},
+      "Chinese Adventure": {"w": 879, "yl": 0.7},
+      "The Hunt for Gold": {"w": 916, "yl": 0.7},
+      "The Jigsaw Puzzle": {"w": 853, "yl": 0.7},
+      "The Motorway": {"w": 884, "yl": 0.7},
+      "Roman Adventure": {"w": 867, "yl": 0.7},
+      "The Power Cut": {"w": 971, "yl": 0.7},
+      "Australian Adventure": {"w": 889, "yl": 0.7},
+      "The Riddle Stone Part 1": {"w": 913, "yl": 0.7},
+      "The Riddle Stone Part 2": {"w": 932, "yl": 0.7},
+      "A Sea Mystery": {"w": 934, "yl": 0.7},
+      "The Big Breakfast": {"w": 860, "yl": 0.7}
+    },
+    
+   "8": {
+      "The Kidnappers": {"w": 878, "yl": 0.8},
+      "Viking Adventure": {"w": 914, "yl": 0.8},
+      "The Rainbow Machine": {"w": 992, "yl": 0.8},
+      "The Flying Carpet": {"w": 1037, "yl": 0.8},
+      "A Day in London": {"w": 890, "yl": 0.8},
+      "Victorian Adventure": {"w": 920, "yl": 0.8},
+      "Pocket Money": {"w": 1267, "yl": 0.8},
+      "The Evil Genie": {"w": 1295, "yl": 0.8},
+      "Save Floppy!": {"w": 1248, "yl": 0.8},
+      "What Was It Like?": {"w": 1239, "yl": 0.8},
+      "Flood!": {"w": 1148, "yl": 0.8},
+      "Egyptian Adventure": {"w": 1128, "yl": 0.8}
+    },
+    
+   "9": {
+     "Green Island": {"w": 1444, "yl": 1.0},
+      "Storm Castle": {"w": 1390, "yl": 1.0},
+      "Superdog": {"w": 1488, "yl": 1.0},
+      "The Litter Queen": {"w": 1452, "yl": 1.0},
+      "The Quest": {"w": 1505, "yl": 1.0},
+      "Survival Adventure": {"w": 1471, "yl": 1.0},
+      "The Blue Eye": {"w": 1217, "yl": 1.0},
+      "Rescue!": {"w": 1306, "yl": 1.0},
+      "Dutch Adventure": {"w": 1368, "yl": 1.0},
+      "The Finest in the Land": {"w": 1274, "yl": 1.0},
+      "The Flying Machine": {"w": 1281, "yl": 1.0},
+      "Key Trouble": {"w": 1278, "yl": 1.0}
+    }
+  },
+
+  "CG": {
+    "": {
+      
+    }
+  },
+
+  "ICR": {
+    "My first": {
+      
+    },
+
+    "1": {
+      
+    }
+  },
+
+  "FRL": {
+    "1": {
+      
+    },
+
+    "2": {
+      
+    },
+
+    "3": {
+      
+    },
+
+    "4": {
+      
+    },
+
+    "5": {
+      
+    },
+
+    "6": {
+      
+    },
+
+    "7": {
+      
+    }
+  },
+
+  "PGL": {
+    "0": {
+      
+    },
+
+    "1": {
+      
+    },
+
+    "2": {
+      
+    }
+  },
+
+  "OBW": {
+    "0": {
+      
+    },
+
+    "1": {
+      
+    }
+  }
+}
