@@ -199,20 +199,109 @@
         )
       };
 
-      const FavoritesSection = () => (
-        <section className="mt-12 p-8 pb-32 flex flex-col items-center">
-          <h2 className="text-3xl font-bold mb-10">Favorites</h2>
+      const FavoriteItem = ({ book, isOpen, onToggle, onSave, onDelete }) => {
+        const [memoText, setMemoText] = useState(book.memo || "");
+        const hasMemo = book.memo && book.memo.trim() !== "";
 
-          <div className="bg-rose-50 rounded-3xl mt-6 p-6 relative w-full h-[560px]">
-            <div className="absolute -top-16 left-1/2 -translate-x-1/2">
-              <img src="img/deco5.png" className="w-48" />
+        useEffect(() => {
+          setMemoText(book.memo || "");
+        }, [book.memo]);
+
+        const handleSave = () => {
+          onSave(book.title, memoText);
+        };
+
+        const handleDelete = () => {
+          if (window.confirm("この本をお気に入りから外し、メモを破棄しますか？\n(読書記録や語数カウントはそのまま残ります)")) {
+            onDelete(book.title);
+          }
+        };
+
+        return (
+          <div className={`transition-colors duration-300 rounded-2xl shadow-md overflow-hidden bg-white ${hasMemo ? 'border border-rose-400' : ''}`}>
+            <div className="p-4 flex justify-between items-center cursor-pointer" onClick={onToggle}>
+              <div className="flex-grow">
+                <div className="text-gray-800 font-bold">{book.title}</div>
+                <div className="text-[10px] text-gray-400 mt-1">
+                  {book.series} / {book.words} words / {book.date}
+                </div>
+              </div>
+              <span className="material-symbols-outlined text-gray-400 transition-transform duration-300" style={{ transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)' }}>
+                expand_more
+              </span>
             </div>
-            <div className="absolute -bottom-10 left-1/2 -translate-x-1/2">
-              <img src="img/deco6.png" className="w-32" />
-            </div>
+
+            {isOpen && (
+              <div className="px-4 -mt-2 pb-2 border-t border-dotted border-gray-100">
+                <textarea
+                  className="w-full h-20  text-sm bg-white/50 rounded-xl p-3 focus:outline-none placeholder:text-gray-300 resize-none font-sans"
+                  placeholder="Write a note for your activity..."
+                  value={memoText}
+                  onChange={(e) => setMemoText(e.target.value)}
+                ></textarea>
+
+                <div className="flex justify-end gap-2">
+                  <button
+                    onClick={handleDelete}
+                    className="w-8 h-8 rounded-full bg-rose-50 flex items-center justify-center shadow-inner font-bold">
+                    <span className="material-symbols-outlined text-rose-400 text-lg">delete</span>
+                  </button>
+                  <button
+                    onClick={handleSave}
+                    className="w-8 h-8 rounded-full bg-rose-50 flex items-center justify-center shadow-inner font-bold">
+                    <span className="material-symbols-outlined text-rose-400 text-lg">check</span>
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
-        </section>
-      );
+        );
+      };
+
+      const FavoritesSection = ({ records, setRecords }) => {
+        const [openIndex, setOpenIndex] = useState(null);
+        const favoriteRecords = records.filter(r => r.isFavorite);
+
+        const updateRecord = (title, memoText) => {
+          const nextRecords = records.map(r =>
+            r.title === title ? { ...r, memo: memoText } : r
+          );
+          setRecords(nextRecords);
+        };
+
+        const removeFavorite = (title) => {
+          const nextRecords = records.map(r =>
+            r.title === title ? { ...r, isFavorite: false } : r
+          );
+          setRecords(nextRecords);
+        };
+
+        return (
+          <section className="mt-12 p-8 pb-32 flex flex-col items-center">
+            <h2 className="text-3xl font-bold mb-10">Favorites</h2>
+            <div className="bg-rose-50 rounded-3xl mt-6 p-6 relative w-full min-h-[560px] shadow-inner">
+              <div className="absolute -top-16 left-1/2 -translate-x-1/2">
+                <img src="img/deco5.png" className="w-48" />
+              </div>
+              <div className="space-y-3 mt-12">
+                {favoriteRecords.map((book, index) => (
+                  <FavoriteItem
+                    key={book.title + book.date}
+                    book={book}
+                    isOpen={openIndex === index}
+                    onToggle={() => setOpenIndex(openIndex === index ? null : index)}
+                    onSave={updateRecord}
+                    onDelete={removeFavorite}
+                  />
+                ))}
+              </div>
+              <div className="absolute -bottom-10 left-1/2 -translate-x-1/2">
+                <img src="img/deco6.png" className="w-32" />
+              </div>
+            </div>
+          </section>
+        );
+      };
 
       const AddBtn = ({ onClose, showModal, onSave, seriesData }) => {
         const translateClass = showModal ? "translate-y-0" : "translate-y-full";
@@ -422,7 +511,7 @@
                       onChange={handleTitleChange}
                       value={currentInput.title}
                       ref={inputRef}
-                      className="flex-grow bg-transparent focus:outline-none placeholder:text-gray-400 transition-colors"
+                      className="flex-grow bg-transparent focus:outline-none placeholder:text-gray-400 transition-colors mr-8"
                     />
 
                     {suggestions.length > 0 && (
@@ -597,7 +686,10 @@
                     wordsByDate={wordsByDate}
                     calendarConfig={calendarData}
                   />)}
-                <FavoritesSection />
+                <FavoritesSection
+                  records={records}
+                  setRecords={setRecords}
+                />
 
                 <BottomNav
                   onAddClick={() => setShowModal(true)}
