@@ -41,13 +41,35 @@
                 <div className="relative -mt-7 mb-20">
                   <div>
                     <svg width="240" height="240" viewBox="0 0 120 120">
-                      <circle cx="60" cy="60" r={r} fill="none" stroke="#ffe4e6" strokeWidth="16" />
+                      <defs>
+                        {/* 外側の影（進捗用） */}
+                        <filter id="progressShadow" x="-20%" y="-20%" width="140%" height="140%">
+                          <feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="#fb7185" flood-opacity="0.3" />
+                        </filter>
+
+                        {/* インナーシャドー（背景円用） */}
+                        <filter id="innerShadow">
+                          <feOffset dx="0" dy="2" />
+                          <feGaussianBlur stdDeviation="3" result="offset-blur" />
+
+                          <feComposite operator="out" in="SourceGraphic" in2="offset-blur" result="inverse" />
+                          <feFlood flood-color="black" flood-opacity="0.1" result="color" />
+                          <feComposite operator="in" in="color" in2="inverse" result="shadow" />
+
+                          <feComposite operator="over" in="shadow" in2="SourceGraphic" />
+                        </filter>
+                      </defs>
+
+                      <circle cx="60" cy="60" r={r} fill="none" stroke="#ffe4e6" strokeWidth="16" 
+                      filter="url(#innerShadow)"/>
 
                       <circle
                         cx="60" cy="60" r={r} fill="none" stroke="#fb7185" strokeWidth="12"
+                        strokeLinecap="round"
                         transform="rotate(-90 60 60)"
                         strokeDasharray={circumference}
                         strokeDashoffset={offset}
+                        filter="url(#progressShadow)"
                       />
                     </svg>
                     <div className="text-center -mt-40">
@@ -143,7 +165,7 @@
 
         return (
           <>
-            <section className="bg-rose-50 mt-28  pt-20 pb-12 px-8 relative z-20">
+            <section className="bg-rose-50 mt-28  pt-20 pb-12 px-8 relative z-20 shadow-inner">
               <div className="text-center mb-10">
                 <img src="img/deco3.png" className="w-24 absolute left-8 -top-14 mb-4" />
 
@@ -161,8 +183,8 @@
               <div className="mb-12">
                 <h3 className="text-center text-sm font-bold  tracking-widest uppercase"> Proportion</h3>
 
-                <div className="w-full h-10 bg-white rounded-full overflow-hidden flex shadow-inner border-2 border-white my-1">
-                  <div className="bg-rose-200" style={{ width: `${getYLevelBookWidth("Beginner")}%` }}></div>
+                <div className="w-full h-10 bg-white rounded-full overflow-hidden flex shadow-md border-2 border-white my-1">
+                  <div className="bg-rose-200 shadow-inner" style={{ width: `${getYLevelBookWidth("Beginner")}%` }}></div>
                   <div className="bg-rose-300" style={{ width: `${getYLevelBookWidth("Intermediate")}%` }}></div>
                   <div className="bg-rose-400" style={{ width: `${getYLevelBookWidth("Advanced")}%` }}></div>
                 </div>
@@ -174,7 +196,7 @@
                 </div>
               </div>
 
-              <div className="bg-white/60 pt-8 px-6 rounded-3xl shadow-sm relative">
+              <div className="bg-white pt-8 px-6 rounded-3xl shadow-md relative">
                 <h3 className="text-center text-sm font-bold mb-4 tracking-widest uppercase">Learning Streak</h3>
 
                 <div className="absolute text-[8px] text-center top-6 right-[26px] p-1">
@@ -659,8 +681,8 @@
 
         const YlevelBookCounts = records.reduce((sum, record) => {
           let group = "Beginner";
-          if (record.Ylevel > 2) group = "Advanced";
-          else if (record.Ylevel > 1) group = "Intermediate";
+          if (record.Ylevel >= 2) group = "Advanced";
+          else if (record.Ylevel >= 1) group = "Intermediate";
 
           sum[group] = (sum[group] || 0) + 1;
           return sum;
